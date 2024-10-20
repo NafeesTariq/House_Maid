@@ -1,4 +1,4 @@
-package com.example.housemaid
+package com.maxomyze.housemaid
 
 import io.flutter.embedding.android.FlutterActivity
 
