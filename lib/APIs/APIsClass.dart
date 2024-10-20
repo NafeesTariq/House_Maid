@@ -15,7 +15,7 @@ import 'dart:convert'; // Import your RegisterationModel class
 
 class APIs {
   final String baseUrl =
-      "https://8b33-182-184-254-8.ngrok-free.app/api/"; // Base URL for your API
+      "https://5d91-39-48-5-172.ngrok-free.app/api/"; // Base URL for your API
 
   Future<loginModel> login({
     required String email,
@@ -196,8 +196,7 @@ class APIs {
       print("Response body: ${response.body}");
 
       // Check for a successful redirection status code (302)
-      if (response.statusCode == 302 ||
-          response.statusCode == 200 ||
+      if ( response.statusCode == 200 ||
           response.statusCode == 201) {
         var jsonResponse = jsonDecode(response.body);
 

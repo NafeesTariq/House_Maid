@@ -12,14 +12,15 @@ class ForgotPasswordController extends GetxController {
     try {
       var response = await apiservice.forgotPassword(email);
 
-      if (response != null && response.status == true) {
-        // Request was successful
+      if (response!.status == false) {
+        ErrorDialog.showError(context, '${response.message}');
+        // Request was unsuccessful
+        // Navigate to Create New Password screen
+      } else {
         Get.to(() => CreateNewPasswordScreen(
               email: response.data!.email!,
-            )); // Navigate to Create New Password screen
-      } else {
+            ));
         // Request failed
-        ErrorDialog.showError(context, response?.message ?? 'Request failed');
       }
     } catch (e) {
       ErrorDialog.showError(context, 'An error occurred: $e');

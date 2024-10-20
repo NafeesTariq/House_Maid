@@ -35,7 +35,7 @@ class GoogleSignInController extends GetxController {
           await apiService.googleSignInInit(deviceId: await _getDeviceId());
 
       // Check for successful response
-      if (response.statusCode == 200 || response.statusCode == 302) {
+      if (response.statusCode == 200 || response.statusCode == 201) {
         print('response code isssss ${response.statusCode}');
         // Redirection URL to open Google Sign-In consent screen
         final Uri googleSignInUrl = Uri.parse(response.data!.url!);
