@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
 import 'dart:io';
 import 'package:house_maid_project/APIs/APIsClass.dart';
 import 'package:house_maid_project/CustomWidgets/errorDialogue.dart';
@@ -7,6 +8,8 @@ import 'package:house_maid_project/Views/RegisterScreens/HouseMaidRegisteration/
 import 'package:house_maid_project/Views/RegisterScreens/HouseMaidRegisteration/address/DataSubmitted.dart';
 
 class HousemaidRegistrationController extends GetxController {
+  final box = GetStorage();
+
   // Variables for start and end times for each day of the week
   var mondayStartTime = ''.obs;
   var mondayEndTime = ''.obs;
@@ -93,6 +96,11 @@ class HousemaidRegistrationController extends GetxController {
 
   // Submit all fields, including schedule, answers, and documents, with error handling
   Future<void> submitAllFields(BuildContext context) async {
+    // final storage = GetStorage();
+    // Retrieve the token from GetStorage
+    String? bearerToken = box.read('auth_token');
+    String? roles = box.read('roleId').toString();
+    print('Rolessssssssss : ${roles}');
     try {
       // Show loader
       isLoading.value = true;
@@ -177,15 +185,21 @@ class HousemaidRegistrationController extends GetxController {
         identityType: 'Driving License',
         documents: documents,
       );
-
-      // Handle API response
-      if (response.statusCode == 200) {
-        Get.snackbar('Success', 'Details submitted successfully!');
-        Get.to(() => SubmittedData());
-      } else {
-        ErrorDialog.showError(
-            context, 'Failed to submit details: ${response.message}');
-      }
+      //>delete
+      box.write('roleId', '12');
+      Get.to(() => SubmittedData());
+      //>delete
+      // H andle API response
+      // if (response.statusCode == 201) {
+      //   print('response is : ${response}');
+      //   SuccessDialogue.showSuccess(
+      //       context, 'Failed to submit details: ${response.message}');
+      //   // Get.snackbar('Success', 'Details submitted successfully!');
+      //   Get.to(() => SubmittedData());
+      // } else {
+      //   ErrorDialog.showError(
+      //       context, 'Failed to submit details: ${response.message}');
+      // }
     } catch (e) {
       ErrorDialog.showError(context, 'An error occurred: $e');
     } finally {

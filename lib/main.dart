@@ -4,10 +4,12 @@ import 'package:get/get_navigation/src/root/get_material_app.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:house_maid_project/Bindings/appbindings.dart';
 import 'package:house_maid_project/Views/Dashboard/housemaid.dart/ClientDashboard.dart';
+import 'package:house_maid_project/Views/Dashboard/TestDashboards/HousemaidDashboard.dart';
 import 'package:house_maid_project/Views/HomeScreen/homeScreen.dart';
 import 'package:house_maid_project/Views/OnboardingScreens/onboardingScreen.dart';
 import 'package:house_maid_project/Views/RegisterScreens/HouseMaidRegisteration/chooseProfile.dart';
 import 'package:house_maid_project/Views/splash/splash.dart';
+import 'package:house_maid_project/Views/Dashboard/TestDashboards/TestDash.dart';
 
 void main() async {
   // Lock the app orientation to portrait mode only
@@ -31,6 +33,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
+    final screenHeight = MediaQuery.of(context).size.height;
+    print(
+        'screen height is : ${screenHeight}    scren width is ${screenWidth}');
     // final storage = GetStorage();
     // storage.erase();
     return GetMaterialApp(
@@ -41,13 +47,13 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: '/',
       routes: {
-        // '/': (context) => SplashScreenView(),
         '/': (context) => SplashScreenView(),
+        // '/': (context) => MinimalExample(),
 
         '/onboarding': (context) => OnboardingScreenOne(),
         '/register': (context) => ChooseProfileScreen(),
         '/home': (context) => HomeScreen(),
-        '/clientDashboard': (context) => Clientdashboard(),
+        '/clientDashboard': (context) => TestDashboard(),
       },
       debugShowCheckedModeBanner: false,
     );

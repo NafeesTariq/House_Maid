@@ -15,7 +15,7 @@ import 'dart:convert'; // Import your RegisterationModel class
 
 class APIs {
   final String baseUrl =
-      "https://8b33-182-184-254-8.ngrok-free.app/api/"; // Base URL for your API
+      "https://c7ef-39-62-165-213.ngrok-free.app/api/"; // Base URL for your API
 
   Future<loginModel> login({
     required String email,
@@ -83,6 +83,11 @@ class APIs {
     required List<Map<String, String>>
         documents, // Each map contains a 'type' and a 'path'
   }) async {
+    final storage = GetStorage();
+
+    // Retrieve the token from GetStorage
+    String? bearerToken = storage.read('auth_token');
+    print('mY TOKE BEFORE LOGOUT IS : ${bearerToken}');
     // Construct the URL
     var url = Uri.parse('${baseUrl}housemaid/register-with-questions');
 
@@ -91,9 +96,9 @@ class APIs {
 
     // Add fields to the request (including the name, email, and password as form fields)
 
-    request.fields['email'] = email;
-    request.fields['password'] = password;
-    request.fields['role_id'] = roleid.toString();
+    request.fields['email'] = '${storage.read('email')}';
+    request.fields['password'] = 'Nafees302@@';
+    request.fields['role_id'] = '${storage.read('roles')}';
     request.fields['questions'] = jsonEncode(questions);
     request.fields['answers'] = jsonEncode(answers);
     request.fields['schedule'] = jsonEncode(schedule);
@@ -134,33 +139,34 @@ class APIs {
 
     // Set headers for the multipart request
     request.headers.addAll({
+      'Content-Type': 'application/json',
       'Accept': 'application/json',
+      'Authorization': 'Bearer $bearerToken',
       // Add more headers if required by your backend
     });
 
     // Send the request and await the response
-    Get.to(SubmittedData());
-    // var response = await request.send();
+    // Get.to(SubmittedData());
+    var response = await request.send();
 
-    // // Read the response
-    // var responseBody = await response.stream.bytesToString();
-    // print("Response status code: ${response.statusCode}");
-    // print("Response body: $responseBody");
+    // Read the response
+    var responseBody = await response.stream.bytesToString();
+    print("Response status code: ${response.statusCode}");
+    print("Response body: $responseBody");
 
-    // // If the response code is 200, decode the response body into HMQuestionsModel
-    // if (response.statusCode == 200) {
-    //   var jsonResponse = jsonDecode(responseBody);
-    //   return HMQuestionsMOdel.fromJson(jsonResponse);
-    // }
-    //  else {
-    //   // Handle other status codes and return a model with an error message
-    //   return HMQuestionsMOdel(
-    //     statusCode: response.statusCode,
-    //     status: false,
-    //     message: "Failed to submit details. Please try again.",
-    //     data: null,
-    //   );
-    // }
+    // If the response code is 200, decode the response body into HMQuestionsModel
+    if (response.statusCode == 200) {
+      var jsonResponse = jsonDecode(responseBody);
+      return HMQuestionsMOdel.fromJson(jsonResponse);
+    } else {
+      // Handle other status codes and return a model with an error message
+      return HMQuestionsMOdel(
+        statusCode: response.statusCode,
+        status: false,
+        message: "Failed to submit details. Please try again.",
+        data: null,
+      );
+    }
     // will change later
     return HMQuestionsMOdel(
       statusCode: 200,

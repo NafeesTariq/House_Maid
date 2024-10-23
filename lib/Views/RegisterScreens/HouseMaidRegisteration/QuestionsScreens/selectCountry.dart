@@ -213,7 +213,7 @@ class _SelectcountryState extends State<Selectcountry> {
                 ),
               ),
             ),
-            SizedBox(height: height * 0.03),
+            SizedBox(height: height * 0.15),
           ],
         ),
       ),

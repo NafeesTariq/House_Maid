@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
 import 'package:house_maid_project/CustomWidgets/NextButtonWidget.dart';
+import 'package:house_maid_project/Views/Dashboard/TestDashboards/TestDash.dart';
 import 'package:house_maid_project/Views/login/loginScreen.dart'; // Import your custom button
 
 class SubmittedData extends StatelessWidget {
@@ -9,6 +10,8 @@ class SubmittedData extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final screenHeight = MediaQuery.of(context).size.height;
+    final screenWidth = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -57,12 +60,13 @@ class SubmittedData extends StatelessWidget {
               CustomNextButton(
                 text: 'Continue', // Your custom button with text
                 onPressed: () {
-                  Get.to(() => LoginScreen());
+                  Get.to(() => TestDashboard());
                   // Add navigation or logic here for continue button
                 },
               ),
-              const SizedBox(
-                  height: 30), // Space between the button and the bottom
+              SizedBox(
+                  height: screenHeight *
+                      0.15), // Space between the button and the bottom
             ],
           ),
         ),

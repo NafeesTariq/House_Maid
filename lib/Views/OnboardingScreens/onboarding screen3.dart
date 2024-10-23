@@ -18,23 +18,6 @@ class OnboardingScreenThree extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // Back Button Positioned in the Top-Left Corner
-              Padding(
-                padding: EdgeInsets.only(
-                  top: screenHeight * 0.05, // 5% height padding
-                  left: screenWidth * 0.05, // 5% width padding
-                ),
-                child: GestureDetector(
-                  onTap: () {
-                    Navigator.pop(context);
-                  },
-                  child: Image.asset(
-                    'assets/images/backbutton.png',
-                    width: screenWidth * 0.1, // 10% of screen width
-                    height: screenWidth * 0.1, // Keep square dimensions
-                  ),
-                ),
-              ),
               SizedBox(height: screenHeight * 0.07), // 7% height spacing
 
               // Responsive Image Container
@@ -117,7 +100,7 @@ class OnboardingScreenThree extends StatelessWidget {
                   },
                 ),
               ),
-              SizedBox(height: screenHeight * 0.04), // 4% height spacing
+              SizedBox(height: screenHeight * 0.02), // 4% height spacing
             ],
           ),
         ),

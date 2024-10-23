@@ -143,7 +143,7 @@ class _KYCScreenState extends State<KYCScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: screenHeight * 0.03),
+                  SizedBox(height: screenHeight * 0.15),
                 ],
               ),
             ),

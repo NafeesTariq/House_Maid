@@ -6,6 +6,7 @@ import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:house_maid_project/APIs/APIsClass.dart';
 import 'package:house_maid_project/CustomWidgets/errorDialogue.dart';
+import 'package:house_maid_project/Views/Dashboard/TestDashboards/TestDash.dart';
 import 'package:house_maid_project/Views/Dashboard/housemaid.dart/ClientDashboard.dart';
 import 'package:path/path.dart';
 import 'package:uni_links3/uni_links.dart';
@@ -128,11 +129,12 @@ class GoogleSignInController extends GetxController {
       // print('${box.read('auth_token')}');
 
       print('ENtered in function');
-      Get.to(() => Clientdashboard());
+      Get.to(() => TestDashboard());
 
       // Get.off(() => HouseMaidBefore(), arguments: {'token': bearerToken});
     } else {
-      Get.snackbar('Error', 'Unknown status received from deep link');
+      ErrorDialog.showError(
+          context as BuildContext, "Unknown status received from Deep Link");
     }
   }
 

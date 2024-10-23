@@ -68,7 +68,7 @@ class ValidateLicenseScreen extends StatelessWidget {
                   child: Image.asset(
                     'assets/images/start_check_image.png', // Update with the correct image path
                     width: width * 0.6, // Adjust the size responsively
-                    height: width * 0.6,
+                    height: width * 0.5,
                   ),
                 ),
               ),
@@ -102,7 +102,7 @@ class ValidateLicenseScreen extends StatelessWidget {
                   ),
                 ),
               ),
-              SizedBox(height: height * 0.03),
+              SizedBox(height: height * 0.15),
             ],
           ),
         ),

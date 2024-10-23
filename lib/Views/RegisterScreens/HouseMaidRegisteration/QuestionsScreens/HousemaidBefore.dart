@@ -123,7 +123,7 @@ class _HouseMaidBeforeState extends State<HouseMaidBefore> {
                   ),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.02), // Responsive spacing
+              // SizedBox(height: screenHeight * 0.02), // Responsive spacing
               ElevatedButton(
                 onPressed: _goToNextScreen, // Handle the Next button press
                 style: ElevatedButton.styleFrom(
@@ -142,7 +142,7 @@ class _HouseMaidBeforeState extends State<HouseMaidBefore> {
                   ),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.04), // Responsive spacing
+              SizedBox(height: screenHeight * 0.15), // Responsive spacing
             ],
           ),
         ),

@@ -202,7 +202,7 @@ class _HourlyRateScreenState extends State<HourlyRateScreen> {
                 ),
               ),
             ),
-            SizedBox(height: screenHeight * 0.04),
+            SizedBox(height: screenHeight * 0.15),
           ],
         ),
       ),

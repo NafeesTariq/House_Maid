@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:house_maid_project/Views/Chats/chatsList.dart';
-import 'package:house_maid_project/Views/Dashboard/housemaid.dart/homeTab.dart';
-import 'package:house_maid_project/Views/Dashboard/housemaid.dart/profileTab.dart';
+import 'package:house_maid_project/Views/Dashboard/TestDashboards/homeTab.dart';
+import 'package:house_maid_project/Views/Dashboard/TestDashboards/profileTab.dart';
 
 class HouseMaidDashboard extends StatefulWidget {
   @override

@@ -158,7 +158,7 @@ class _GoalScreenState extends State<GoalScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.04), // Responsive spacing
+              SizedBox(height: screenHeight * 0.15), // Responsive spacing
             ],
           ),
         ),

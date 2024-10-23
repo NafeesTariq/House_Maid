@@ -101,9 +101,8 @@ class _VaccinatedScreenState extends State<VaccinatedScreen> {
                   ),
                 ),
               ),
-              SizedBox(
-                  height: screenHeight *
-                      0.04), // Responsive spacing after the button
+              SizedBox(height: screenHeight * 0.15),
+              // Responsive spacing after the button
             ],
           ),
         ),

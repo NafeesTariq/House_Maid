@@ -207,7 +207,7 @@ class _VaccinationProofScreenState extends State<VaccinationProofScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.03),
+              SizedBox(height: screenHeight * 0.15),
             ],
           ),
         ),

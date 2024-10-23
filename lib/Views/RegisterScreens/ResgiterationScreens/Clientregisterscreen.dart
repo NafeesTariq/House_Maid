@@ -32,6 +32,11 @@ class _CLientRegisterationSCreenState extends State<CLientRegisterationSCreen> {
     _resetFields();
   }
 
+  bool _isEmailValid(String email) {
+    final emailRegex = RegExp(r'^[^@]+@[^@]+\.[^@]+');
+    return emailRegex.hasMatch(email);
+  }
+
   void _resetFields() {
     fullNameController.clear();
     emailController.clear();
@@ -40,12 +45,61 @@ class _CLientRegisterationSCreenState extends State<CLientRegisterationSCreen> {
   }
 
   void _register() {
+    // Check if the email is valid
+    if (!_isEmailValid(emailController.text)) {
+      // Show error if the email format is incorrect
+      Get.snackbar(
+        'Error',
+        'Please enter a valid email address.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    // Check if the terms and services checkbox is checked
+    if (!isChecked) {
+      // Show error if the checkbox is not checked
+      Get.snackbar(
+        'Error',
+        'You must agree to the Terms and Services.',
+        backgroundColor: Colors.red,
+        colorText: Colors.white,
+      );
+      return;
+    }
+
+    // Check if password and confirm password match
+    if (passwordController.text != confirmPasswordController.text) {
+      // Show error dialog if passwords do not match
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: Text('Error'),
+            content: Text('Password and Confirm Password do not match.'),
+            actions: <Widget>[
+              TextButton(
+                child: Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+      return;
+    }
+
+    // If all checks pass, assign values to the controller
     _registrationController.fullName.value = fullNameController.text;
     _registrationController.email.value = emailController.text;
     _registrationController.password.value = passwordController.text;
     _registrationController.confirmPassword.value =
         confirmPasswordController.text;
 
+    // Call the registration function from the controller
     _registrationController.register(context);
   }
 
@@ -194,99 +248,100 @@ class _CLientRegisterationSCreenState extends State<CLientRegisterationSCreen> {
                         // Add remaining parts of your UI here...
                         SizedBox(height: screenHeight * 0.03),
                         // Or Register With Text
-                        Row(
-                          children: [
-                            const Expanded(
-                                child: Divider(color: Color(0xFFDEDEDE))),
-                            Padding(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: screenWidth * 0.02),
-                              child: Text(
-                                'Or Register with',
-                                style: TextStyle(
-                                  color: const Color(0xFF8391A1),
-                                  fontFamily: 'Urbanist',
-                                  fontSize: screenWidth * 0.04,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                            const Expanded(
-                                child: Divider(color: Color(0xFFDEDEDE))),
-                          ],
-                        ),
-                        SizedBox(height: screenHeight * 0.03),
-                        // Social Media Buttons
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: screenHeight * 0.08,
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(screenWidth * 0.08),
-                                  border: Border.all(
-                                      color: const Color(0xFFDEDEDE)),
-                                  color: const Color(0xFFFAFAFA),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/google.png',
-                                      width: screenWidth * 0.07,
-                                      height: screenHeight * 0.05,
-                                    ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    Text(
-                                      'Google',
-                                      style: TextStyle(
-                                        fontFamily: 'Urbanist',
-                                        fontSize: screenWidth * 0.045,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                            SizedBox(width: screenWidth * 0.04),
-                            Expanded(
-                              child: Container(
-                                height: screenHeight * 0.08,
-                                decoration: BoxDecoration(
-                                  borderRadius:
-                                      BorderRadius.circular(screenWidth * 0.08),
-                                  border: Border.all(
-                                      color: const Color(0xFFDEDEDE)),
-                                  color: const Color(0xFFFAFAFA),
-                                ),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Image.asset(
-                                      'assets/images/facebook.png',
-                                      width: screenWidth * 0.07,
-                                      height: screenHeight * 0.05,
-                                    ),
-                                    SizedBox(width: screenWidth * 0.03),
-                                    Text(
-                                      'Facebook',
-                                      style: TextStyle(
-                                        fontFamily: 'Urbanist',
-                                        fontSize: screenWidth * 0.045,
-                                        fontWeight: FontWeight.w600,
-                                        color: Colors.black,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
+                        // Row(
+                        //   children: [
+                        //     const Expanded(
+                        //         child: Divider(color: Color(0xFFDEDEDE))),
+                        //     Padding(
+                        //       padding: EdgeInsets.symmetric(
+                        //           horizontal: screenWidth * 0.02),
+                        //       child: Text(
+                        //         'Or Register with',
+                        //         style: TextStyle(
+                        //           color: const Color(0xFF8391A1),
+                        //           fontFamily: 'Urbanist',
+                        //           fontSize: screenWidth * 0.04,
+                        //           fontWeight: FontWeight.w600,
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     const Expanded(
+                        //         child: Divider(color: Color(0xFFDEDEDE))),
+                        //   ],
+                        // ),
+                        // SizedBox(height: screenHeight * 0.03),
+                        // // Social Media Buttons
+                        // Row(
+                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        //   children: [
+                        //     Expanded(
+                        //       child: Container(
+                        //         height: screenHeight * 0.08,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius:
+                        //               BorderRadius.circular(screenWidth * 0.08),
+                        //           border: Border.all(
+                        //               color: const Color(0xFFDEDEDE)),
+                        //           color: const Color(0xFFFAFAFA),
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Image.asset(
+                        //               'assets/images/google.png',
+                        //               width: screenWidth * 0.07,
+                        //               height: screenHeight * 0.05,
+                        //             ),
+                        //             SizedBox(width: screenWidth * 0.03),
+                        //             Text(
+                        //               'Google',
+                        //               style: TextStyle(
+                        //                 fontFamily: 'Urbanist',
+                        //                 fontSize: screenWidth * 0.045,
+                        //                 fontWeight: FontWeight.w600,
+                        //                 color: Colors.black,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //     SizedBox(width: screenWidth * 0.04),
+                        //     Expanded(
+                        //       child: Container(
+                        //         height: screenHeight * 0.08,
+                        //         decoration: BoxDecoration(
+                        //           borderRadius:
+                        //               BorderRadius.circular(screenWidth * 0.08),
+                        //           border: Border.all(
+                        //               color: const Color(0xFFDEDEDE)),
+                        //           color: const Color(0xFFFAFAFA),
+                        //         ),
+                        //         child: Row(
+                        //           mainAxisAlignment: MainAxisAlignment.center,
+                        //           children: [
+                        //             Image.asset(
+                        //               'assets/images/facebook.png',
+                        //               width: screenWidth * 0.07,
+                        //               height: screenHeight * 0.05,
+                        //             ),
+                        //             SizedBox(width: screenWidth * 0.03),
+                        //             Text(
+                        //               'Facebook',
+                        //               style: TextStyle(
+                        //                 fontFamily: 'Urbanist',
+                        //                 fontSize: screenWidth * 0.045,
+                        //                 fontWeight: FontWeight.w600,
+                        //                 color: Colors.black,
+                        //               ),
+                        //             ),
+                        //           ],
+                        //         ),
+                        //       ),
+                        //     ),
+                        //   ],
+                        // ),
+
                         SizedBox(height: screenHeight * 0.03),
                         // Already have an account
                         Center(

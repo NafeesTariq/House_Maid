@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:file_picker/file_picker.dart';
@@ -167,7 +166,7 @@ class _ProofOfAddressScreenState extends State<ProofOfAddressScreen> {
                   ),
                 ),
               ),
-              SizedBox(height: screenHeight * 0.04), // Responsive spacing
+              SizedBox(height: screenHeight * 0.15), // Responsive spacing
             ],
           ),
         ),

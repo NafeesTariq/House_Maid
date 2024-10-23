@@ -158,7 +158,7 @@ class ProfileTabScreen extends StatelessWidget {
           // Handle logout action
         },
         style: ElevatedButton.styleFrom(
-          backgroundColor: Color(0xFFFEB0D9),
+          backgroundColor: Color.fromARGB(255, 254, 176, 217),
           padding: const EdgeInsets.symmetric(vertical: 16.0),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(25),

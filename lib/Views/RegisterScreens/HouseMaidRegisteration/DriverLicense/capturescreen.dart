@@ -78,6 +78,8 @@ class _ValidateDriverLicenseScreenState
 
   @override
   Widget build(BuildContext context) {
+    double height = MediaQuery.of(context).size.height;
+    double width = MediaQuery.of(context).size.width;
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
@@ -140,7 +142,7 @@ class _ValidateDriverLicenseScreenState
                   ),
                 ),
               ),
-              const SizedBox(height: 30),
+              SizedBox(height: height * 0.15),
             ],
           ),
         ),

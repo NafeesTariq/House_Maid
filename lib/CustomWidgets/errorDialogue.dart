@@ -16,3 +16,19 @@ class ErrorDialog {
     ).show();
   }
 }
+
+class SuccessDialogue {
+  static void showSuccess(BuildContext context, String errorMessage) {
+    // Ensure context is valid and dialog is being shown after MaterialApp is built
+    AwesomeDialog(
+      context: context,
+      dialogType: DialogType.success,
+      headerAnimationLoop: false,
+      animType: AnimType.scale,
+      title: 'Success',
+      desc: errorMessage,
+      btnOkOnPress: () {},
+      btnOkColor: const Color(0xFFFEB0D9), // Your theme color
+    ).show();
+  }
+}

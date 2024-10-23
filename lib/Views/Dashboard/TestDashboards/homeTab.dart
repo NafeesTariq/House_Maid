@@ -1,32 +1,165 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get_storage/get_storage.dart';
+import 'package:house_maid_project/APIs/APIsClass.dart';
+import 'package:house_maid_project/CustomWidgets/errorDialogue.dart';
+import 'package:house_maid_project/Views/RegisterScreens/HouseMaidRegisteration/QuestionsScreens/HousemaidBefore.dart';
+import 'package:house_maid_project/Views/login/loginScreen.dart';
 
-class HouseMaidDashboardTab extends StatelessWidget {
+class HouseMaidDashboardTab extends StatefulWidget {
+  @override
+  _HouseMaidDashboardTabState createState() => _HouseMaidDashboardTabState();
+}
+
+class _HouseMaidDashboardTabState extends State<HouseMaidDashboardTab> {
+  final GetStorage _storage = GetStorage();
+  APIs ApiService = APIs();
+  String? _roleId;
+
+  @override
+  void initState() {
+    super.initState();
+    // Read roleId from local storage
+    _roleId = _storage.read('roleId')?.toString();
+  }
+
   @override
   Widget build(BuildContext context) {
+    print('role status is : ${_storage.read('roleId')}');
     return SafeArea(
       child: Scaffold(
         backgroundColor: Colors.white,
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: <Widget>[
+              DrawerHeader(
+                decoration: BoxDecoration(
+                  color: const Color.fromARGB(255, 254, 176, 217),
+                ),
+                child: Center(
+                  child: Text(
+                    'House Maid Application',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 24,
+                    ),
+                  ),
+                ),
+              ),
+              ListTile(
+                leading: Icon(
+                  Icons.home,
+                  color: const Color.fromARGB(255, 254, 176, 217),
+                ),
+                title: Text('House Maid'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              if (_roleId == '1') ...[
+                // Show "Register as a Housemaid" button if roleId is 1
+                ListTile(
+                  leading: Icon(
+                    Icons.app_registration_outlined,
+                    color: const Color.fromARGB(255, 254, 176, 217),
+                  ),
+                  title: Text('Register as a Housemaid'),
+                  onTap: () {
+                    Get.to(HouseMaidBefore());
+                    // Add your registration logic here
+                  },
+                ),
+              ] else if (_roleId == '12') ...[
+                // Show "Switch Account" button with options if roleId is 12
+                ListTile(
+                  leading: Icon(
+                    Icons.switch_account,
+                    color: const Color.fromARGB(255, 254, 176, 217),
+                  ),
+                  title: Text('Switch Account'),
+                  onTap: () {
+                    _showSwitchAccountOptions(context);
+                  },
+                ),
+              ],
+              ListTile(
+                leading: Icon(
+                  Icons.logout,
+                  color: const Color.fromARGB(255, 254, 176, 217),
+                ),
+                title: Text('Logout'),
+                onTap: () async {
+                  // Close the drawer
+                  Navigator.pop(context);
+
+                  // Show a loading indicator while the logout request is being processed
+                  showDialog(
+                    context: context,
+                    barrierDismissible: false,
+                    builder: (BuildContext context) {
+                      return Center(
+                        child: CircularProgressIndicator(),
+                      );
+                    },
+                  );
+
+                  // Call the LogoutAPI function
+                  var response = await ApiService.LogoutAPI();
+
+                  // Close the loading indicator
+                  Navigator.of(context).pop();
+
+                  // Check if logout was successful
+                  if (response.message == "Logged out successfully") {
+                    // Clear local storage
+                    final storage = GetStorage();
+                    await storage.erase(); // Clear all stored data
+
+                    // Navigate to the login screen or a splash screen
+                    Get.offAll(() => LoginScreen());
+                  } else {
+                    // Show an error message if logout failed
+                    // ScaffoldMessenger.of(context).showSnackBar(
+                    //   SnackBar(
+                    //     content: Text(response.message ??
+                    //         "Failed to log out. Please try again."),
+                    //   ),
+                    // );
+
+                    ErrorDialog.showError(context, '${response.message}');
+                  }
+                },
+              ),
+            ],
+          ),
+        ),
         body: Column(
           children: [
-            // Top section with Logo, Avatar, and Badge (Fixed)
+            // Top section with Drawer Icon, Avatar, and Badge (Fixed)
             Padding(
               padding: const EdgeInsets.all(16.0),
               child: Column(
                 children: [
-                  // Top Row with Logo and Avatar
+                  // Top Row with Drawer Icon and Avatar
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      // Logo on the Left
-                      Image.asset(
-                        'assets/images/logo.png', // Replace with actual logo path
-                        height: 40,
+                      // Drawer Icon Button
+                      Builder(
+                        builder: (context) => IconButton(
+                          icon: Icon(Icons.menu),
+                          onPressed: () {
+                            Scaffold.of(context).openDrawer();
+                          },
+                        ),
                       ),
                       // Circular Avatar on the Right
                       CircleAvatar(
-                          radius: 20,
-                          backgroundImage:
-                              AssetImage('assets/images/profileimage.jpg')),
+                        radius: 20,
+                        backgroundImage:
+                            AssetImage('assets/images/profileimage.jpg'),
+                      ),
                     ],
                   ),
                   const SizedBox(height: 32),
@@ -61,6 +194,35 @@ class HouseMaidDashboardTab extends StatelessWidget {
           ],
         ),
       ),
+    );
+  }
+
+  // Function to show switch account options
+  void _showSwitchAccountOptions(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context) {
+        return Wrap(
+          children: [
+            ListTile(
+              leading: Icon(Icons.account_circle),
+              title: Text('Switch to Client Account'),
+              onTap: () {
+                Navigator.pop(context);
+                // Add your logic to switch to client account here
+              },
+            ),
+            ListTile(
+              leading: Icon(Icons.home_repair_service),
+              title: Text('Switch to Housemaid Account'),
+              onTap: () {
+                Navigator.pop(context);
+                // Add your logic to switch to housemaid account here
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -238,6 +400,8 @@ class HouseMaidDashboardTab extends StatelessWidget {
     );
   }
 }
+
+
 
 
 // import 'package:flutter/material.dart';
